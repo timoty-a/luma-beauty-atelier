@@ -1,0 +1,26 @@
+.account-dialog {
+  max-height: 90vh;
+  overflow: auto;
+  padding: 55px 40px 35px;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.account-form .button {
+  margin-top: 3px;
+}
+
+.auth-switch {
+  font-size: 13px;
+  margin-top: 18px;
+  text-decoration: underline;
+}
+
+.account-dialog .text-link {
+  margin-top: 22px;
+}

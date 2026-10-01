@@ -18,7 +18,7 @@ All tables have row-level security enabled and no browser access policies. Serve
 2. Create a Web application OAuth client. Add the exact shop origin to authorized JavaScript origins. Add `https://YOUR_PROJECT_REF.supabase.co/auth/v1/callback` as the authorized redirect URI.
 3. In Supabase Authentication → Sign In / Providers → Google, enable Google and paste that client ID and client secret. Keep the Google secret in Supabase, not the storefront.
 4. In Supabase URL Configuration, set the Site URL to the shop origin and allow `https://luma-beauty-atelier.raiseedafrica.chatgpt.site/api/auth/callback` as a redirect URL. For development also allow `http://127.0.0.1:5173/api/auth/callback` and set local `SITE_URL` accordingly.
-5. The shop uses PKCE and HttpOnly session cookies. Sessions expire after Supabase's access-token lifetime; the customer signs in again rather than using a long-lived refresh token.
+5. The shop supports Google OAuth plus Supabase email/password sign-in and account creation. Google uses PKCE, and both methods store the access token in an HttpOnly cookie. Sessions expire after Supabase's access-token lifetime; the customer signs in again rather than using a long-lived refresh token.
 
 Official reference: https://supabase.com/docs/guides/auth/social-login/auth-google
 

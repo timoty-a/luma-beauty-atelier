@@ -5,7 +5,7 @@ The storefront and checkout are implemented. No external accounts have been crea
 ## 1. Supabase database
 
 1. Create a Supabase project.
-2. Open its SQL editor and run `supabase/schema.sql` once. This creates products, carts, cart items and orders, with transactional checkout and sample products.
+2. Open its SQL editor and run `supabase/schema.sql` once. This creates products, carts, cart items and orders, with transactional checkout and sample products. Then run `supabase/catalog-expansion.sql` to add six branded products and their source metadata. If the original schema is already installed, run only the expansion SQL. See `CATALOG_SOURCES.md` for official product and image references.
 3. Get the project URL, anon key and service-role key from project settings. Configure `SUPABASE_URL`, `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` as server-side hosting environment variables. Never put the service-role key in browser code or source control.
 4. Set `SITE_URL` to the exact site origin without a trailing slash. Current preview origin: `https://luma-beauty-atelier.raiseedafrica.chatgpt.site`.
 

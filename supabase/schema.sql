@@ -43,6 +43,16 @@ revoke all on function public.place_order(uuid,jsonb,uuid) from public,anon,auth
 grant execute on function public.update_cart(uuid,text,integer) to service_role;
 grant execute on function public.claim_cart(uuid,uuid) to service_role;
 grant execute on function public.place_order(uuid,jsonb,uuid) to service_role;
+
+-- API keys still require PostgreSQL table privileges even when the service role
+-- bypasses row-level security. Application traffic remains server-only because
+-- anon and authenticated receive no table grants or RLS policies.
+grant select, insert, update, delete on table
+  public.products,
+  public.carts,
+  public.cart_items,
+  public.orders
+to service_role;
 insert into public.products values
 ('dew-serum','The Daily Dew','Skincare','A lightweight hydrating serum for a fresh, dewy finish. Make a little room for it in your morning ritual.',2800,'30 ml / 1 fl oz','/serum.png','DAILY ESSENTIAL',1,true),
 ('cloud-cream','Cloud Comfort','Skincare','A soft, comforting face cream that leaves skin feeling beautifully moisturised. Your last step, morning and night.',3400,'50 ml / 1.7 fl oz','/cream.png','THE SOFT TOUCH',2,true),

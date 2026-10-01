@@ -1,0 +1,2 @@
+import {db,session,sameOrigin,failure} from '../../../lib/server';
+export async function POST(req:Request){if(!sameOrigin(req))return failure(Error('Invalid request origin.'),403);try{const b:any=await req.json();if(typeof b.product_id!=='string'||!Number.isInteger(b.quantity)||b.quantity<0||b.quantity>10)return failure(Error('Choose a quantity between 0 and 10.'),400);const sid=await session();const result=await db('rpc/update_cart','POST',{p_session:sid,p_product:b.product_id,p_quantity:b.quantity});return Response.json({items:result})}catch(e){return failure(e)}}

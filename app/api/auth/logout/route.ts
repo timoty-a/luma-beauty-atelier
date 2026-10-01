@@ -1,0 +1,3 @@
+import {cookies} from 'next/headers';
+import {config} from '../../../../lib/server';
+export async function GET(){const jar=await cookies();const token=jar.get('luma_access')?.value;const c=config();if(token)await fetch(`${c.url}/auth/v1/logout`,{method:'POST',headers:{apikey:c.anon!,Authorization:`Bearer ${token}`}});jar.delete('luma_access');jar.delete('luma_cart');return Response.redirect(c.origin||'/')}

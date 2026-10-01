@@ -1,0 +1,3 @@
+import {catalog} from '../../../lib/catalog';
+import {configured,db,session,identity,failure} from '../../../lib/server';
+export async function GET(){if(!configured())return Response.json({configured:false,products:catalog,items:[]});try{const sid=await session();const [products,items,user]=await Promise.all([db('products?active=eq.true&order=position.asc'),db(`cart_items?session_id=eq.${sid}&select=product_id,quantity`),identity()]);return Response.json({configured:true,products:products.map((p:any)=>({...p,price:p.price/100})),items,user:user?.email||null},{headers:{'Cache-Control':'no-store'}})}catch(e){return failure(e)}}

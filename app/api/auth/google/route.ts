@@ -1,0 +1,4 @@
+import {cookies} from 'next/headers';
+import {config,configured,failure} from '../../../../lib/server';
+function base64(bytes:Uint8Array){return btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+export async function GET(){if(!configured())return failure(Error('Accounts are not open yet.'));const c=config();const verifier=base64(crypto.getRandomValues(new Uint8Array(32)));const challenge=base64(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(verifier))));(await cookies()).set('luma_verifier',verifier,{httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:'lax',path:'/',maxAge:600});const url=new URL(`${c.url}/auth/v1/authorize`);url.search=new URLSearchParams({provider:'google',redirect_to:`${c.origin}/api/auth/callback`,code_challenge:challenge,code_challenge_method:'s256'}).toString();return Response.redirect(url)}

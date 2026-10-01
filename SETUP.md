@@ -1,15 +1,15 @@
 # LUMA shop setup
 
-The storefront and checkout are implemented. No external accounts have been created or connected. The published site is a private preview. Products, prices (USD), shipping ($6; free from $60), images and copy are illustrative and need your review before selling. Checkout accepts pay-on-delivery orders only; it never charges a card.
+The storefront and checkout are implemented and connected to Supabase and Mailgun. The published site is private. Products, prices (USD), shipping ($6; free from $60), images and copy are illustrative and need your review before selling. Checkout accepts pay-on-delivery orders only; it never charges a card.
 
 ## 1. Supabase database
 
 1. Create a Supabase project.
 2. Open its SQL editor and run `supabase/schema.sql` once. This creates products, carts, cart items and orders, with transactional checkout and sample products. Then run `supabase/catalog-expansion.sql` to add six branded products and their source metadata. If the original schema is already installed, run only the expansion SQL. See `CATALOG_SOURCES.md` for official product and image references.
-3. Get the project URL, anon key and service-role key from project settings. Configure `SUPABASE_URL`, `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` as server-side hosting environment variables. Never put the service-role key in browser code or source control.
+3. Get the project URL, publishable key and secret key from project settings. Configure `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` and `SUPABASE_SECRET_KEY` as server-side hosting environment variables. Never put the secret key in browser code or source control. Legacy `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` names remain supported for local migration only.
 4. Set `SITE_URL` to the exact site origin without a trailing slash. Current preview origin: `https://luma-beauty-atelier.raiseedafrica.chatgpt.site`.
 
-All tables have row-level security enabled and no browser access policies. Server endpoints use the service-role key. Cart identity uses a random, HttpOnly cookie. Google identity is verified through Supabase before it is attached to an order. The cart is stored in Postgres, not browser local storage. Guests keep their cart on the same browser for 30 days. Signed-in carts are linked to the account, but automatic cross-device cart merging is not implemented.
+All tables have row-level security enabled and no browser access policies. Server endpoints use the Supabase secret key. Cart identity uses a random, HttpOnly cookie. Google identity is verified through Supabase before it is attached to an order. The cart is stored in Postgres, not browser local storage. Guests keep their cart on the same browser for 30 days. Signed-in carts are linked to the account, but automatic cross-device cart merging is not implemented.
 
 ## 2. Google authentication
 
@@ -45,4 +45,4 @@ Copy `.env.example` to `.env`, fill in your local values, then run `npm install`
 
 ## Validation in this delivery
 
-Build and local route checks can be performed without credentials. Real Supabase persistence, Google sign-in and Mailgun delivery cannot be verified until those accounts are connected. Browser WebMCP is optional and feature-detected; it provides only collection filtering.
+The production Supabase database and Mailgun sandbox are connected. Google sign-in still requires its OAuth client to be added to Supabase. Mailgun's sandbox can deliver only to authorized test recipients until a custom sending domain is verified. Browser WebMCP is optional and feature-detected; it provides only collection filtering.

@@ -1,3 +1,4 @@
 import {cookies} from 'next/headers';
-import {config} from '../../../../lib/server';
+import {config,failure,sameOrigin} from '../../../../lib/server';
 export async function GET(req:Request){const jar=await cookies();const token=jar.get('luma_access')?.value;const c=config();if(token)await fetch(`${c.url}/auth/v1/logout`,{method:'POST',headers:{apikey:c.publishable!,Authorization:`Bearer ${token}`}});jar.delete('luma_access');jar.delete('luma_cart');return Response.redirect(new URL('/',req.url))}
+export async function POST(req:Request){if(!sameOrigin(req))return failure(Error('Invalid request origin.'),403);const authorization=req.headers.get('authorization');const token=authorization?.match(/^Bearer\s+(.+)$/i)?.[1];if(!token)return failure(Error('You are not signed in.'),401);const c=config();const response=await fetch(`${c.url}/auth/v1/logout`,{method:'POST',headers:{apikey:c.publishable!,Authorization:`Bearer ${token}`}});return response.ok?Response.json({signed_out:true}):failure(Error('Sign out could not be completed.'),response.status)}

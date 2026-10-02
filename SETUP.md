@@ -8,16 +8,16 @@ The storefront and checkout are implemented and connected to Supabase and Mailgu
 2. Open its SQL editor and run `supabase/schema.sql` once. This creates products, carts, cart items and orders, with transactional checkout and sample products. Then run `supabase/catalog-expansion.sql` to add twelve branded products and their source metadata. If the original schema is already installed, run only the expansion SQL. See `CATALOG_SOURCES.md` for official product and image references.
    Projects created from an older copy of the schema must also run `supabase/service-role-grants.sql` once.
 3. Get the project URL, publishable key and secret key from project settings. Configure `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` and `SUPABASE_SECRET_KEY` as server-side hosting environment variables. Never put the secret key in browser code or source control. Legacy `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` names remain supported for local migration only.
-4. Set `SITE_URL` to the exact site origin without a trailing slash. Current preview origin: `https://luma-beauty-atelier.raiseedafrica.chatgpt.site`.
+4. Set `SITE_URL` to the exact site origin without a trailing slash. Current production origin: `https://luma-beauty-atelier.vercel.app`.
 
-All tables have row-level security enabled and no browser access policies. Server endpoints use the Supabase secret key. Cart identity uses a random, HttpOnly cookie. Google identity is verified through Supabase before it is attached to an order. The cart is stored in Postgres, not browser local storage. Guests keep their cart on the same browser for 30 days. Signed-in carts are linked to the account, but automatic cross-device cart merging is not implemented.
+All tables have row-level security enabled and no browser access policies. Server endpoints use the Supabase secret key. Cart identity uses a random, HttpOnly cookie on web and a random secure device session on mobile. Google identity is verified through Supabase before it is attached to an order. The cart is stored in Postgres. Guests keep a cart per device. On login, `claim_shared_cart` merges that device's items into the account cart. Signed-in clients watch the cart revision through `/api/cart`, so changes appear across web and mobile without a refresh.
 
 ## 2. Google authentication
 
 1. In Google Cloud Console, create/select a project and configure Google Auth Platform branding, audience and data access (email, profile, openid). While in testing, add your test users.
 2. Create a Web application OAuth client. Add the exact shop origin to authorized JavaScript origins. Add `https://YOUR_PROJECT_REF.supabase.co/auth/v1/callback` as the authorized redirect URI.
 3. In Supabase Authentication → Sign In / Providers → Google, enable Google and paste that client ID and client secret. Keep the Google secret in Supabase, not the storefront.
-4. In Supabase URL Configuration, set the Site URL to the shop origin and allow `https://luma-beauty-atelier.raiseedafrica.chatgpt.site/api/auth/callback` as a redirect URL. For development also allow `http://127.0.0.1:5173/api/auth/callback` and set local `SITE_URL` accordingly.
+4. In Supabase URL Configuration, set the Site URL to the shop origin and allow `https://luma-beauty-atelier.vercel.app/api/auth/callback` as a redirect URL. For development also allow the local callback URL and set local `SITE_URL` accordingly.
 5. The shop supports Google OAuth plus Supabase email/password sign-in and account creation. Google uses PKCE, and both methods store the access token in an HttpOnly cookie. Sessions expire after Supabase's access-token lifetime; the customer signs in again rather than using a long-lived refresh token.
 
 Official reference: https://supabase.com/docs/guides/auth/social-login/auth-google
@@ -44,6 +44,20 @@ Copy `.env.example` to `.env`, fill in your local values, then run `npm install`
 - Review real product information, stock/fulfillment rules, supported countries, tax treatment, currency and shipping. This starter has no inventory accounting, card payments, refunds, admin UI, or carrier integration.
 - Add applicable business/privacy/returns terms before public launch. The site is currently owner-private; change its audience only when ready.
 
+## 6. Mobile app
+
+The Expo app is in `mobile/` and calls the same production `/api/shop`, `/api/cart`, `/api/auth/*`, and `/api/checkout` routes. Run the pending SQL files in `supabase/migrations/` before publishing a backend that depends on them.
+
+Install Expo Go on an Android or iPhone, then run:
+
+```sh
+cd mobile
+npm install
+npx expo start --tunnel
+```
+
+Scan the QR code, sign in with the same email/password account on web and mobile, and keep both bags visible. Update an item on either device and confirm the other changes automatically. Google OAuth remains a web flow; the mobile client uses the same Supabase email/password account and refresh tokens stored with Expo SecureStore.
+
 ## Validation in this delivery
 
-The production Supabase database and Mailgun sandbox are connected. Google sign-in still requires its OAuth client to be added to Supabase. Mailgun's sandbox can deliver only to authorized test recipients until a custom sending domain is verified. Browser WebMCP is optional and feature-detected; it provides only collection filtering.
+The production Supabase database, Google web authentication, and Mailgun sandbox are connected. Mailgun's sandbox can deliver only to authorized test recipients until a custom sending domain is verified. The mobile client shares Supabase accounts through the password flow and does not contain server credentials.

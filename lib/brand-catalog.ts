@@ -71,5 +71,77 @@ export const brandCatalog:Product[]=[
     "size": "15 mL · Enlighten",
     "image": "/products/positive-light-liquid-luminizer-1.jpg",
     "tag": "YOUR DAILY GLOW"
+  },
+  {
+    "id": "cerave-hydrating-cleanser",
+    "brand": "CeraVe",
+    "name": "Hydrating Facial Cleanser",
+    "category": "Skincare",
+    "description": "A gentle cream cleanser with ceramides and hyaluronic acid that removes impurities without leaving normal-to-dry skin feeling tight.",
+    "price": 15.99,
+    "source_url": "https://www.cerave.com/skincare/cleansers/hydrating-facial-cleanser",
+    "size": "355 mL / 12 fl oz",
+    "image": "/products/cerave-hydrating-cleanser.jpg",
+    "tag": "THE GENTLE CLEANSE"
+  },
+  {
+    "id": "cerave-am-spf50",
+    "brand": "CeraVe",
+    "name": "AM Facial Moisturizing Lotion SPF 50",
+    "category": "Skincare",
+    "description": "A lightweight daytime moisturizer with ceramides, niacinamide, hyaluronic acid and broad-spectrum SPF 50 protection.",
+    "price": 19.99,
+    "source_url": "https://www.cerave.com/skincare/moisturizers/facial-moisturizers/am-facial-moisturizing-lotion-spf-50",
+    "size": "75 mL / 2.5 fl oz",
+    "image": "/products/cerave-am-spf50.jpg",
+    "tag": "MORNING PROTECTION"
+  },
+  {
+    "id": "elf-halo-glow",
+    "brand": "e.l.f. Cosmetics",
+    "name": "Halo Glow Liquid Filter",
+    "category": "Makeup",
+    "description": "A multi-use complexion booster with a luminous, soft-focus finish that can be worn alone, mixed, layered or highlighted.",
+    "price": 15,
+    "source_url": "https://www.elfcosmetics.com/products/halo-glow-liquid-filter",
+    "size": "31.5 mL / 1.06 fl oz",
+    "image": "/products/elf-halo-glow.png",
+    "tag": "SOFT-FOCUS GLOW"
+  },
+  {
+    "id": "elf-lash-n-roll",
+    "brand": "e.l.f. Cosmetics",
+    "name": "Lash 'N Roll Mascara",
+    "category": "Makeup",
+    "description": "A lifting mascara with a curved, double-sided silicone brush for separated lashes and lasting curl.",
+    "price": 7,
+    "source_url": "https://www.elfcosmetics.com/products/lash-n-roll-mascara?Color=Black",
+    "size": "7 g / 0.24 oz · Black",
+    "image": "/products/elf-lash-n-roll.png",
+    "tag": "LIFT & SEPARATE"
+  },
+  {
+    "id": "fenty-gloss-bomb",
+    "brand": "Fenty Beauty",
+    "name": "Gloss Bomb Universal Lip Luminizer",
+    "category": "Makeup",
+    "description": "A non-sticky, conditioning lip gloss with high-impact shine in the universally flattering Fenty Glow shade.",
+    "price": 23,
+    "source_url": "https://fentybeauty.com/products/gloss-bomb-universal-lip-luminizer-wattab",
+    "size": "9 mL · Fenty Glow",
+    "image": "/products/fenty-gloss-bomb.jpg",
+    "tag": "THE GLOSS ICON"
+  },
+  {
+    "id": "fenty-eaze-drop",
+    "brand": "Fenty Beauty",
+    "name": "Eaze Drop Blurring Skin Tint",
+    "category": "Makeup",
+    "description": "A lightweight, buildable skin tint that smooths and softly blurs while keeping the finish comfortable and natural.",
+    "price": 41,
+    "source_url": "https://fentybeauty.com/products/eaze-drop-lightweight-blurring-skin-tint-20",
+    "size": "32 mL / 1.08 fl oz",
+    "image": "/products/fenty-eaze-drop.jpg",
+    "tag": "YOUR SKIN, BLURRED"
   }
 ];

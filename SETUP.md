@@ -5,7 +5,7 @@ The storefront and checkout are implemented and connected to Supabase and Mailgu
 ## 1. Supabase database
 
 1. Create a Supabase project.
-2. Open its SQL editor and run `supabase/schema.sql` once. This creates products, carts, cart items and orders, with transactional checkout and sample products. Then run `supabase/catalog-expansion.sql` to add six branded products and their source metadata. If the original schema is already installed, run only the expansion SQL. See `CATALOG_SOURCES.md` for official product and image references.
+2. Open its SQL editor and run `supabase/schema.sql` once. This creates products, carts, cart items and orders, with transactional checkout and sample products. Then run `supabase/catalog-expansion.sql` to add twelve branded products and their source metadata. If the original schema is already installed, run only the expansion SQL. See `CATALOG_SOURCES.md` for official product and image references.
    Projects created from an older copy of the schema must also run `supabase/service-role-grants.sql` once.
 3. Get the project URL, publishable key and secret key from project settings. Configure `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` and `SUPABASE_SECRET_KEY` as server-side hosting environment variables. Never put the secret key in browser code or source control. Legacy `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` names remain supported for local migration only.
 4. Set `SITE_URL` to the exact site origin without a trailing slash. Current preview origin: `https://luma-beauty-atelier.raiseedafrica.chatgpt.site`.

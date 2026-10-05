@@ -10,7 +10,9 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.timotya.lumabeauty",
-      "config": { "usesNonExemptEncryption": false }
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.timotya.lumabeauty",
@@ -28,6 +30,13 @@
     "plugins": [
       "expo-secure-store",
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9b14d7b2-34d8-4c5c-ae1d-38a3b78406e1"
+      }
+    },
+    "owner": "timmm-2"
   }
 }
